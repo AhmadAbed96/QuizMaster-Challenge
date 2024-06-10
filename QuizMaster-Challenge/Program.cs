@@ -4,6 +4,8 @@ namespace QuizMaster_Challenge
 {
     internal class Program
     {
+        static int counter = 0;
+        static int i = 0;
         static void Main(string[] args)
         {
             try
@@ -16,43 +18,82 @@ namespace QuizMaster_Challenge
             }
             finally
             {
-                Console.WriteLine("Thank you for attempting the quiz");
+                Console.WriteLine("You finsh the quiz successfully ");
             }
         }
 
         static void StartQuiz()
         {
-            int result = 0;
-            string question1 = "What is the capital of Jordan?";
-            string answer1 = "AMMAN";
-
-            string question2 = "What is the capital of Qatar?";
-            string answer2 = "DOHA";
-
-            string question3 = "What is the capital of Spain?";
-            string answer3 = "MADRID";
-
-            string[] questions = {question1, question2, question3};   
-            string[] answers = {answer1, answer2, answer3 };  
-
-            for (int i = 0; i < questions.Length; i++)
+           List<string> questions = new List<string>
+           {
+                "What is the capital of jordan?", "What is 3 * 3?" , "What is 10 - 3?" ,"What is 2 + 2 ?", "What is 3 + 2 ?"
+           };
+            List<string> answers = new List<string>
             {
-                Console.WriteLine(questions[i]);
-                string answer = Console.ReadLine().ToUpper();
-                if (answer == answers[i])
-                {
-                    result++;
-                    Console.WriteLine($"Your score is {result}") ;   
-                }
-                else
-                {
-                    Console.WriteLine($"The correct answer is {answers[i]} \n and your score is {result}");
-                }
+                "Amman", "9" , "7" ,"4" ,"5"
+            };
 
+           
+
+            try {
+                int  questionsLength = questions.Count;
+                Console.WriteLine();
+                while ( i <questionsLength)
+                {
+                    bool isAnswer = false;
+                    while(!isAnswer)
+                    {
+                        Console.WriteLine(questions[i]);
+                        string answer = Console.ReadLine().ToUpper();
+
+                        bool b = Int32.TryParse(answers[i], out int result);
+                        if (b)
+                        {
+                           
+                            int input = Convert.ToInt32(answer);
+                            if (result == input)
+                            {
+                               
+                                counter++;
+                                isAnswer = true;
+                                Console.WriteLine($"Your score is {counter} /5");
+                            }
+                            else
+                            {
+                                Console.WriteLine($" not correct ");
+                                i++;
+                            }
+                        }
+                        
+                        else if (answer == answers[i])
+                        {
+                            counter++;
+                           
+                            isAnswer = true;
+                            Console.WriteLine($"Your score is {counter}/5");
+                        }
+
+                       
+
+                        else
+                        {
+                            Console.WriteLine($"not correct ");
+                            i++;
+                        }
+
+                    }
+                    i++;
+                   
+                        
+                }
             }
-                            
+            catch(Exception ex)
+            { Console.WriteLine( ex.Message);
+               StartQuiz();
+            }
 
 
+           
         }
     }
 }
